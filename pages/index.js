@@ -12,7 +12,13 @@ export default class Home extends Component {
 
   componentDidMount() {
     this.state.reserves.Init().then((res) => {
-      this.setState({ ready: true, Liq: res.LiquidityTokens, Res: res.ReserveTokens, actualReserves: res.ActualReserves });
+      this.setState({
+        ready: true,
+        Liq: res.LiquidityTokens,
+        Res: res.ReserveTokens,
+        actualReserves: res.ActualReserves,
+        excessReserves: res.ExcessReserves
+      });
       console.log(JSON.stringify(this.state
       ));
     });
@@ -101,6 +107,12 @@ export default class Home extends Component {
             </div>
             <div class="table-row-group">
               <div class="table-row">
+                <div class="border table-cell text-left">Current Excess Reserves</div>
+                <div class="border table-cell text-right"></div>
+                <div class="border table-cell text-right">{this.state.excessReserves}</div>
+                <div class="border table-cell text-right"></div>
+              </div>
+              <div class="table-row">
                 <div class="border table-cell text-left">Current Reserves</div>
                 <div class="border table-cell text-right"></div>
                 <div class="border table-cell text-right">{this.state.actualReserves}</div>
@@ -109,13 +121,13 @@ export default class Home extends Component {
               <div class="table-row">
                 <div class="border table-cell text-left">Should be Reserves</div>
                 <div class="border table-cell text-right"></div>
-                <div class="border table-cell text-right">{this.state.Res.reduce((a,b)=>a+parseInt(b.value), 0)+this.state.Liq.reduce((a,b)=>a+parseInt(b.value), 0)}</div>
+                <div class="border table-cell text-right">{this.state.Res.reduce((a, b) => a + parseInt(b.value), 0) + this.state.Liq.reduce((a, b) => a + parseInt(b.value), 0)}</div>
                 <div class="border table-cell text-right"></div>
               </div>
               <div class="table-row">
                 <div class="border table-cell text-left">Missing Reserves</div>
                 <div class="border table-cell text-right"></div>
-                <div class="border table-cell text-right">{(this.state.Res.reduce((a,b)=>a+parseInt(b.value), 0)+this.state.Liq.reduce((a,b)=>a+parseInt(b.value), 0))-this.state.actualReserves}</div>
+                <div class="border table-cell text-right">{(this.state.Res.reduce((a, b) => a + parseInt(b.value), 0) + this.state.Liq.reduce((a, b) => a + parseInt(b.value), 0)) - this.state.actualReserves}</div>
                 <div class="border table-cell text-right"></div>
               </div>
             </div>

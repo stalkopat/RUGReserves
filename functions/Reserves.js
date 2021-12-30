@@ -69,13 +69,18 @@ let InitActualReserves = async () =>{
     return await RugTreasuryContract.methods.totalReserves().call().then((res)=>res).catch((err)=>0);
 };
 
+let InitExcessReserves = async () =>{
+    return await RugTreasuryContract.methods.excessReserves().call().then((res)=>res).catch((err)=>0);
+};
+
 var Reserve = {
     Init: async () => {
         RugDecimals = new BN(await new web3.eth.Contract(Constants.ERC20Abi, Constants.RUGAddress).methods.decimals().call().then(res => res).catch((err) => 0));
         return {
             ReserveTokens: await InitReserve(),
             LiquidityTokens: await InitLiquidity(),
-            ActualReserves: await InitActualReserves()
+            ActualReserves: await InitActualReserves(),
+            ExcessReserves: await InitExcessReserves()
         }
     },
 };
